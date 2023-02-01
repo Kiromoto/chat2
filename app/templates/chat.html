@@ -52,10 +52,6 @@
     <div id="divForMessages" class="messages-chat">
         {% for message in chat_one_messages %}
         <div class="message">
-            <!--                <div class="photo"-->
-            <!--                     style="background-image: url('{{ message.author.user.member.avatar.url }}');">-->
-            <!--                    <div class="online"></div>-->
-            <!--                </div>-->
             <div class="{% cycle '' 'response' %}">
                 <p class="name">{{ message.author.user.username }}</p>
                 <p class="text"> {{ message.text }}</p>
