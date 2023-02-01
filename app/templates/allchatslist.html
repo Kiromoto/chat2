@@ -1,0 +1,25 @@
+{% extends 'flatpages/index.html' %}
+
+{% load custom_tags %}
+{% load static %}
+
+{% block title %}
+Все пользователи сайта
+{% endblock title %}
+
+{% block content %}
+<div class="list-members">
+    <h2 align="center"> Все чаты </h2>
+    {% for one in allchatslist %}
+    <div class="member" onClick="document.location.pathname='{{ one.get_absolute_url }}'">
+        {{one.name}} --- Создан: {{one.dtcreate}}
+        <p id="p-room-number" style="display: none">{{one.pk}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
+
+
+

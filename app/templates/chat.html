@@ -1,0 +1,81 @@
+{% extends 'flatpages/index.html' %}
+{% load static %}
+
+{% block title %}
+Страница чата {{chat.name}}
+{% endblock title %}
+
+{% block content %}
+
+<section class="list-members">
+    <div class="member">
+        <p class="name">Список участников чата</p>
+    </div>
+
+    {% if not chat_one.owner in chat_one_members %}
+    <div class="member">
+        <div class="photo" style="background-image: url('{{ chat_one.owner.avatar.url }}');">
+            {% if chat_one.owner.online %}
+            <div class="online"></div>
+            {% endif %}
+        </div>
+        <div class="member-contact">
+            <p class="name">{{ chat_one.owner.user.username }}</p>
+        </div>
+        <div class="timer">{{ chat_one.owner.user.last_login|date:"d.m.Y H:i" }}</div>
+    </div>
+    {% endif %}
+
+    {% for member in chat_one_members %}
+    <div class="member">
+        <div class="photo" style="background-image: url('{{ member.avatar.url }}');">
+            {% if member.online %}
+            <div class="online"></div>
+            {% endif %}
+        </div>
+        <div class="member-contact">
+            <p class="name">{{ member.user.username }}</p>
+        </div>
+        <div class="timer">{{ member.user.last_login|date:"d.m.Y H:i" }}</div>
+    </div>
+    {% endfor %}
+</section>
+
+<section class="chat">
+    <div class="header-chat">
+        <i class="icon fa fa-user-o" aria-hidden="true"></i>
+        <p class="name">{{chat_one.name}}</p>
+        <p id="chatroom-pk" class="name">{{chat_one.pk}}</p>
+        <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+    </div>
+
+    <div id="divForMessages" class="messages-chat">
+        {% for message in chat_one_messages %}
+        <div class="message">
+            <!--                <div class="photo"-->
+            <!--                     style="background-image: url('{{ message.author.user.member.avatar.url }}');">-->
+            <!--                    <div class="online"></div>-->
+            <!--                </div>-->
+            <div class="{% cycle '' 'response' %}">
+                <p class="name">{{ message.author.user.username }}</p>
+                <p class="text"> {{ message.text }}</p>
+                <p class="time">{{ message.dtcreate|date:"d.m.Y H:i" }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="footer-chat">
+        <input id="inputMessage" type="text" class="write-message" placeholder="Type your message here"></input>
+        <button id="btnSend" class="send-button" type="button">Send</button>
+    </div>
+
+</section>
+
+<input style="display: none" id="curUser" name="curUsername" value="{{ user.username }}">
+{{ chat_one.pk|json_script:"room-name" }}
+{{ user.username|json_script:"current-user" }}
+
+<script src="{% static 'js/chatroom.js' %}"></script>
+
+{% endblock content %}

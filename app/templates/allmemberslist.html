@@ -1,0 +1,24 @@
+{% extends 'flatpages/index.html' %}
+
+{% load custom_tags %}
+{% load static %}
+
+{% block title %}
+Все пользователи сайта
+{% endblock title %}
+
+{% block content %}
+<div class="list-members">
+    <h2 align="center"> Все пользователи сайта </h2>
+        {% for one in allmemberslist %}
+        <div class="member">{{one.username}} - {{one.first_name}}</div>
+        {% endfor %}
+
+</div>
+
+
+
+{% endblock content %}
+
+
+
