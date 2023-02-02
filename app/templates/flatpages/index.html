@@ -28,6 +28,8 @@
 
 </div>
 
+
+{% if page_obj.paginator.num_pages > 1%}
 <!-- Pagination-->
 <nav aria-label="Pagination">
     <hr class="my-4"/>
@@ -62,6 +64,7 @@
         </li>
     </ul>
 </nav>
+{% endif %}
 
 <footer class="footer-block">
     <div class="footer-container">

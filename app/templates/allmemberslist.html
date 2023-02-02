@@ -11,7 +11,10 @@
 <div class="list-members">
     <h2 align="center"> Все пользователи сайта </h2>
         {% for one in allmemberslist %}
-        <div class="member">{{one.username}} - {{one.first_name}}</div>
+            <div class="member">
+                 <div class="photo" style="background-image: url('{{ one.avatar.url }}');"></div>
+                     {{one.username}} - {{one.first_name}}
+            </div>
         {% endfor %}
 
 </div>
