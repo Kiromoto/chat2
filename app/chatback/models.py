@@ -36,14 +36,4 @@ class Chatroom(models.Model):
         return self.name
 
 
-class Message(models.Model):
-    text = models.CharField(max_length=1024, verbose_name='Message text')
-    dtcreate = models.DateTimeField(auto_now_add=True, verbose_name='Datetime message')
-    author = models.ForeignKey(Member, related_name='memberauthor', on_delete=models.CASCADE,
-                               verbose_name='Author message')
-    room = models.ForeignKey(Chatroom, on_delete=models.CASCADE, verbose_name='In chat')
-
-    def __str__(self):
-        return self.text
-
 
