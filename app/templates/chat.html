@@ -45,20 +45,11 @@
     <div class="header-chat">
         <i class="icon fa fa-user-o" aria-hidden="true"></i>
         <p class="name">{{chat_one.name}}</p>
-        <p id="chatroom-pk" class="name">{{chat_one.pk}}</p>
         <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
     </div>
 
     <div id="divForMessages" class="messages-chat">
-        {% for message in chat_one_messages %}
-        <div class="message">
-            <div class="{% cycle '' 'response' %}">
-                <p class="name">{{ message.author.user.username }}</p>
-                <p class="text"> {{ message.text }}</p>
-                <p class="time">{{ message.dtcreate|date:"d.m.Y H:i" }}</p>
-            </div>
-        </div>
-        {% endfor %}
+
     </div>
 
     <div class="footer-chat">

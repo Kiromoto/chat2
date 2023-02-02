@@ -15,16 +15,18 @@
         <ul class="menu">
             <li><a href="/allmembers/">Пользователи</a></li>
             <li><a href="/allchats/">Чаты</a></li>
-            <li><a href="/messages/">Сообщения</a></li>
             <li><a href="/profile/">Профиль</a></li>
-            <li><a href="/accounts/logout/">Выйти</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/accounts/logout/">Выйти</a></li>
+            {% else %}
+                <li><a href="/accounts/login/">Войти</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
 <div class="page-container">
     {% block content %}
     {% endblock %}
-<!--        <p>Эта надпись с родительской HTML</p>-->
 
 </div>
 

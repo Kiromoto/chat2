@@ -1,19 +1,16 @@
-from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
-from django.urls import reverse_lazy
-from rest_framework.generics import UpdateAPIView
-from django.views.generic import UpdateView, ListView
+from django.shortcuts import render, get_object_or_404, redirect
+
+from django.views.generic import ListView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 
 from rest_framework import viewsets
 
-from .models import Member, Chatroom, Message
+from .models import Member, Chatroom
 from .forms import UserForm, ProfileForm
 from django.contrib.auth.models import User
-from .serializers import MemberSerializer, ChatroomSerializer, MessageSerializer
-
-from datetime import datetime
+from .serializers import MemberSerializer, ChatroomSerializer
 
 
 class MemberView(viewsets.ModelViewSet):
@@ -24,11 +21,6 @@ class MemberView(viewsets.ModelViewSet):
 class ChatroomView(viewsets.ModelViewSet):
     serializer_class = ChatroomSerializer
     queryset = Chatroom.objects.all()
-
-
-class MessageView(viewsets.ModelViewSet):
-    serializer_class = MessageSerializer
-    queryset = Message.objects.all()
 
 
 class AllMembersList(ListView):
@@ -73,12 +65,6 @@ def update_profile(request, pk):
 def show_one_chat(request, pk):
     chat_one = get_object_or_404(Chatroom, pk=pk)
     chat_one_members = Chatroom.objects.get(pk=pk).guests.all()
-    chat_one_messages = Message.objects.filter(room=Chatroom.objects.get(pk=pk))
-    print(f'chat_one_messages = {chat_one_messages}')
 
-    return render(request, 'chat.html', context={'chat_one': chat_one, 'chat_one_members': chat_one_members,
-                                                 'chat_one_messages': chat_one_messages, "room_name": pk})
-
-
-def show_api(request, *args, **kwargs):
-    return render(request, 'api.html', context={'text': 'ERROR_TEXT'})
+    return render(request, 'chat.html',
+                  context={'chat_one': chat_one, 'chat_one_members': chat_one_members, "room_name": pk})

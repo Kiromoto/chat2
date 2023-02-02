@@ -1,4 +1,4 @@
-from .models import Member, Chatroom, Message
+from .models import Member, Chatroom
 from rest_framework import serializers
 
 
@@ -12,12 +12,3 @@ class ChatroomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chatroom
         fields = ['name', 'dtcreate', 'owner', 'guests', ]
-
-
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Message
-        fields = ['text', 'dtcreate', 'author', 'room', ]
-
-
-
