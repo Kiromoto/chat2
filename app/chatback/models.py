@@ -26,14 +26,15 @@ class Member(models.Model):
 class Chatroom(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name='Chat name')
     dtcreate = models.DateTimeField(auto_now_add=True, verbose_name='Datetime chat')
-    owner = models.ForeignKey(Member, related_name='memberowner', on_delete=models.CASCADE, verbose_name='User-creater')
-    guests = models.ManyToManyField(Member, related_name='memberguest', blank=True, verbose_name='Members of chat')
+    owner = models.ForeignKey(Member, related_name='ownchatrooms', on_delete=models.CASCADE, verbose_name='User-creater')
+    guests = models.ManyToManyField(Member, related_name='guestofchatrooms', blank=True, verbose_name='Members of chat')
+
+    class Meta:
+        ordering = ['dtcreate']
 
     def get_absolute_url(self):
         return reverse('chat', args=[str(self.id)])
 
     def __str__(self):
         return self.name
-
-
 

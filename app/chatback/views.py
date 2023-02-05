@@ -5,22 +5,27 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
 from .models import Member, Chatroom
 from .forms import UserForm, ProfileForm
 from django.contrib.auth.models import User
 from .serializers import MemberSerializer, ChatroomSerializer
+from .permissions import IsOwnerOrReadOnly
 
 
 class MemberView(viewsets.ModelViewSet):
     serializer_class = MemberSerializer
     queryset = Member.objects.all()
-
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class ChatroomView(viewsets.ModelViewSet):
     serializer_class = ChatroomSerializer
     queryset = Chatroom.objects.all()
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class AllMembersList(ListView):
@@ -68,3 +73,7 @@ def show_one_chat(request, pk):
 
     return render(request, 'chat.html',
                   context={'chat_one': chat_one, 'chat_one_members': chat_one_members, "room_name": pk})
+
+
+def show_chatrooms(request, *args, **kwargs):
+    return render(request, 'showchatrooms.html')
