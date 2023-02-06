@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+{% load custom_tags %}
+
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/istyle.css' %}">
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+<header class="header-block">
+    <nav>
+        <ul class="menu">
+            <li><a href="/allmembers/">Пользователи</a></li>
+            <li><a href="/allchats/">Чаты</a></li>
+            <li><a href="/profile/">Профиль</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/accounts/logout/">Выйти</a></li>
+            {% else %}
+                <li><a href="/accounts/login/">Войти</a></li>
+            {% endif %}
+            <li><a href="/crooms/">Работа через API</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="page-container">
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+
+{% if page_obj.paginator.num_pages > 1%}
+<!-- Pagination-->
+<nav aria-label="Pagination">
+    <hr class="my-4"/>
+    <ul class="pagination justify-content-center my-4">
+        <li class="page-item"><a class="page-link" href="?{% url_replace page=1 %}" tabindex="-1" aria-disabled="true">Newer</a>
+        </li>
+        {% if page_obj.has_previous %}
+        <li class="page-item" aria-current="page">
+            <a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">{{page_obj.previous_page_number}}</a>
+        </li>
+        {% if page_obj.previous_page_number != 1 %}
+        <li class="page-item disabled"><a class="page-link" href="">...</a></li>
+        {% endif %}
+        {% endif %}
+
+        <li class="page-item active"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+               href="?{% url_replace page=page_obj.next_page_number %}">{{page_obj.next_page_number}}</a>
+        </li>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+        <li class="page-item disabled"><a class="page-link" href="">...</a></li>
+        <li class="page-item">
+            <a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">{{page_obj.paginator.num_pages}}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">Older</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+
+<footer class="footer-block">
+    <div class="footer-container">
+        <p class="copyright">Copyright &copy; My chat 2022</p>
+    </div>
+</footer>
+</body>
+</html>

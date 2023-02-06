@@ -1,0 +1,32 @@
+{% extends 'flatpages/index.html' %}
+
+{% block title %}
+Мой профиль
+{% endblock title %}
+
+{% block content %}
+<div class="div-user-info">
+
+</div>
+
+<div class="div-user-info">
+        <h2>{{ user.get_full_name }}</h2>
+        <p>Ваше имя: {{ user.first_name }}</p>
+    <p>Ваша фамилия: {{ user.last_name }}</p>
+
+    {% if user.member.avatar %}
+    <div class="content-block">
+        <p>Ваше фото: <img src="{{ user.member.avatar.url }}" width="200px" alt="ваша аватарка"/></li></p>
+    </div>
+    {% else %}
+    <p>Ваше фото: вы еще не загрузили свое фото!</p>
+    {% endif %}
+    <p>Вы сейчас на сайте: {{ user.member.online }}</p>
+    <a class="send-button" href="{% url 'update_profile' user.pk %}">Редактировать профиль</a>
+</div>
+
+<div class="div-user-info">
+
+</div>
+
+{% endblock content %}

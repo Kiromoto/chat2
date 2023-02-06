@@ -1,0 +1,18 @@
+{% extends 'flatpages/index.html' %}
+{% load static %}
+
+{% block title %}
+Страница управления чатами
+{% endblock title %}
+
+{% block content %}
+<h2>Здесь будем управлять своими чатами</h2>
+<hr>
+<div id="chatrooms-output" class="div-chatrooms-output">
+    <button id="btn-get" class="send-button">GET</button>
+    <button id="btn-post" class="send-button">POST</button>
+    <textarea id="text-area-1"></textarea>
+
+</div>
+<script src="{% static 'js/showchatrooms.js' %}"></script>
+{% endblock content %}
