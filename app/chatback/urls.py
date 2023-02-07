@@ -11,7 +11,6 @@ from rest_framework.documentation import include_docs_urls
 router = DefaultRouter()
 router.register(r'members', MemberView, basename='memberurl')
 router.register(r'chatrooms', ChatroomView, basename='chatroomurl')
-router.register(r'chatrooms', ChatroomView, basename='chatroomurl')
 
 app_name_member = "members"
 app_name_chatroom = "chatrooms"
@@ -22,5 +21,5 @@ urlpatterns = [path('profile/', show_profile, name='show_profile'),
                path('allchats/', AllChatsList.as_view(), name='allchatslist'),
                path('chat/<int:pk>', show_one_chat, name='chat'),
                path('crooms/', show_chatrooms, name='show_chatrooms'),
-               path('docs/', include_docs_urls(title='My API service'), name='api-docs'),
+               # path('docs/', include_docs_urls(title='My API service'), name='api-docs'),
                ] + router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

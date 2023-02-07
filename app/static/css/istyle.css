@@ -555,10 +555,12 @@ nav ul li a:hover {
 
 
 .footer-block {
+    top: calc(100% - 80px);
     margin-top: 10px;
     height: 70px;
+    width: 100%;
     background-color: #4768b5;
-    position: relative;
+    position: absolute;
 }
 
 .footer-container {
